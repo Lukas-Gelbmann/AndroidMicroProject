@@ -15,7 +15,4 @@
     <item
         android:id="@+id/sortAge"
         android:title="sort by age" />
-    <item
-        android:id="@+id/sortEntryAge"
-        android:title="sort by entry age" />
 </menu>

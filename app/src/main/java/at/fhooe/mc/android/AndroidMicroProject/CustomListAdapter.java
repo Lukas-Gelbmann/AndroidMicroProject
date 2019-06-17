@@ -39,7 +39,5 @@ public class CustomListAdapter extends ArrayAdapter {
         nameTextField.setText(nameArray.get(position));
         infoTextField.setText(infoArray.get(position));
         return rowView;
-
     }
-
 }
