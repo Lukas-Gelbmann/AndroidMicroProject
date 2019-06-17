@@ -14,9 +14,6 @@ public class CustomListAdapter extends ArrayAdapter {
     //to reference the Activity
     private final Activity context;
 
-    //to store the animal images
-    //private final Integer[] imageIDarray;
-
     //to store the list of names
     private final ArrayList<String> nameArray;
 
@@ -37,13 +34,10 @@ public class CustomListAdapter extends ArrayAdapter {
         //this code gets references to objects in the listview_row.xml file
         TextView nameTextField = (TextView) rowView.findViewById(R.id.nameTextViewID);
         TextView infoTextField = (TextView) rowView.findViewById(R.id.infoTextViewID);
-        //ImageView imageView = (ImageView) rowView.findViewById(R.id.imageView1ID);
 
         //this code sets the values of the objects to values from the arrays
         nameTextField.setText(nameArray.get(position));
         infoTextField.setText(infoArray.get(position));
-        //imageView.setImageResource(imageIDarray[position]);
-
         return rowView;
 
     }

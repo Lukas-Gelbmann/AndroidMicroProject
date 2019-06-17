@@ -3,9 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="at.fhooe.mc.android.AndroidMicroProject.MainActivity">
     <item
-        android:id="@+id/ifAscending"
-        android:title="Ascending"
-        app:actionLayout="@layout/switch_item"
+        android:id="@+id/reverse"
+        android:title="reverse"
         app:showAsAction="always|withText" />
     <item
         android:id="@+id/sortName"

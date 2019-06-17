@@ -16,8 +16,11 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.ListView;
+import android.widget.Switch;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -37,8 +40,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     int year;
     public int entries;
     public int sortingpref;
-
-
     CustomListAdapter customListAdapter;
 
     @Override //this happens when you start the app
@@ -161,7 +162,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         while (date.charAt(i) != 46)
             i++;
         return Integer.parseInt(date.substring(j, i));
-
     }
 
     public int getDay(String date) {
@@ -246,16 +246,14 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     //decide between different algorithms
     public void sort() {
         if (sortingpref == 0)
-            sortByName(true);
+            sortByName();
         if (sortingpref == 1)
-            sortByName(false);
+            sortByDate();
         if (sortingpref == 2)
-            sortByDate(true);
-        if (sortingpref == 3)
-            sortByDate(false);
+            sortByAge();
     }
 
-    public void sortByName(boolean ascending) {
+    public void sortByName() {
         for (int j = 0; j < names.size(); j++) {
             for (int i = 0; i < names.size() - 1; i++) {
                 if (names.get(i).compareTo(names.get(i + 1)) > 0) {
@@ -268,13 +266,9 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 }
             }
         }
-        if (!ascending) {
-            names = reverseList(names);
-            dates = reverseList(dates);
-        }
     }
 
-    public void sortByDate(boolean ascending) {
+    public void sortByDate() {
         ArrayList<Integer> list = new ArrayList();
         for (int i = 0; i < dates.size(); i++) {
             list.add(i, getMonth(dates.get(i)) * 100 + getDay(dates.get(i)));
@@ -310,17 +304,9 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             dates.add(dates.size(), dates.get(0));
             dates.remove(0);
         }
-        if (!ascending) {
-            names = reverseList(names);
-            dates = reverseList(dates);
-        }
     }
 
-    public void sortByAge(boolean ascending) {
-    }
-
-    public void sortByEntryAge(boolean ascending) {
-
+    public void sortByAge() {
     }
 
     public ArrayList<String> reverseList(ArrayList list) {
@@ -335,7 +321,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
@@ -344,6 +329,12 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
+            case R.id.reverse:{
+                Toast.makeText(this, "list turned", Toast.LENGTH_SHORT).show();
+                names = reverseList(names);
+                dates = reverseList(dates);
+                customListAdapter.notifyDataSetChanged();
+            }break;
             case R.id.sortName: {
                 sortingpref = 0;
                 sort();
@@ -351,15 +342,15 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             }
             break;
             case R.id.sortDate: {
-                sortingpref = 2;
+                sortingpref = 1;
                 sort();
                 customListAdapter.notifyDataSetChanged();
             }
             break;
             case R.id.sortAge: {
-            }
-            break;
-            case R.id.sortEntryAge: {
+                sortingpref = 2;
+                sort();
+                customListAdapter.notifyDataSetChanged();
             }
             break;
             default: {

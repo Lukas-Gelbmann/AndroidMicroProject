@@ -23,27 +23,30 @@ public class InsideListView extends AppCompatActivity {
 
         // display the name
         String savedExtra = getIntent().getStringExtra("name");
-        TextView myText = (TextView) findViewById(R.id.inside_listview_name);
+        TextView myText = findViewById(R.id.inside_listview_name);
         myText.setText(savedExtra);
 
         //display the date
         savedExtra = getIntent().getStringExtra("date");
-        myText = (TextView) findViewById(R.id.inside_listview_date);
+        myText = findViewById(R.id.inside_listview_date);
         myText.setText(savedExtra);
 
+        //calculate the difference
+        int years = Calendar.getInstance().get(Calendar.YEAR) - getYear(savedExtra);
         long diff = 0;
         try {
-            diff = getdiff(savedExtra);
+            diff = getDifference(savedExtra);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        if (diff < 0)
+        if (diff < 0) {
             diff = 365 + diff;
+            years++;
+        }
 
         //display the difference
-        myText = (TextView) findViewById(R.id.inside_listview_diff);
-        myText.setText("Days: " + diff);
-
+        myText = findViewById(R.id.inside_listview_diff);
+        myText.setText("Gets " + years + " in " + diff + " day.");
 
         //the delete button
         Button button = findViewById(R.id.delete);
@@ -81,19 +84,17 @@ public class InsideListView extends AppCompatActivity {
         finish();
     }
 
-
     public void returnWithoutDelete() {
         Intent i = new Intent();
         setResult(RESULT_CANCELED, i);
         finish();
     }
 
-
-    long getdiff(String _date) throws ParseException {
+    long getDifference(String _date) throws ParseException {
         SimpleDateFormat myFormat = new SimpleDateFormat("MMdd");
         int date = (getMonth(_date)) * 100 + getDay(_date);
         DateFormat df = new SimpleDateFormat("MMdd");
-        String inputString1 = new String();
+        String inputString1 = "";
         if (getMonth(_date) <= 9)
             inputString1 = 0 + String.valueOf(date);
         else
@@ -103,8 +104,16 @@ public class InsideListView extends AppCompatActivity {
         Date date2 = myFormat.parse(inputString2);
         long diff = date1.getTime() - date2.getTime();
         return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+    }
 
-
+    public int getYear(String date) {
+        int i = 0;
+        while (date.charAt(i) != 46)
+            i++;
+        i++;
+        while (date.charAt(i) != 46)
+            i++;
+        return Integer.parseInt(date.substring(++i));
     }
 
     public int getMonth(String date) {
