@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="at.fhooe.mc.android.AndroidMicroProject.MainActivity">
+    <item
+        android:id="@+id/ifAscending"
+        android:title="Ascending"
+        app:actionLayout="@layout/switch_item"
+        app:showAsAction="always|withText" />
+    <item
+        android:id="@+id/sortName"
+        android:title="sort by name" />
+    <item
+        android:id="@+id/sortDate"
+        android:title="sort by date" />
+    <item
+        android:id="@+id/sortAge"
+        android:title="sort by age" />
+    <item
+        android:id="@+id/sortEntryAge"
+        android:title="sort by entry age" />
+</menu>

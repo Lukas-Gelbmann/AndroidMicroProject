@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">BirthdayTracker</string>
+    <string name="action_settings">Settings</string>
+    <string name="name">Name:</string>
+    <string name="delete_Button">Delete</string>
+    <string name="return_Button">Return</string>
+    <string name="textview">TextView</string>
+</resources>
