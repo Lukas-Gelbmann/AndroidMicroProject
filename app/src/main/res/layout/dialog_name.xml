@@ -29,13 +29,15 @@
             android:layout_marginTop="20dp"
             android:background="@null"
             android:textColor="#000"
-            android:hint="enter some text..."
-            android:id="@+id/input"/>
+            android:hint="@string/dialog_name_enterText"
+            android:id="@+id/input"
+            android:inputType=""
+            android:autofillHints="" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="OK"
+            android:text="@string/dialog_name_ok"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="20dp"
@@ -44,15 +46,15 @@
             android:id="@+id/action_ok"/>
 
         <TextView
+            android:id="@+id/action_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CANCEL"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
             android:layout_marginRight="20dp"
-            android:textSize="18sp"
+            android:text="@string/dialog_name_canel"
             android:textColor="#33bbff"
-            android:id="@+id/action_cancel"/>
+            android:textSize="18sp" />
 
     </RelativeLayout>
 

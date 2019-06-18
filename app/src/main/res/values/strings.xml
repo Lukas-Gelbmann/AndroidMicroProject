@@ -5,4 +5,16 @@
     <string name="delete_Button">Delete</string>
     <string name="return_Button">Return</string>
     <string name="textview">TextView</string>
+    <string name="dialog_name_canel">CANCEL</string>
+    <string name="dialog_name_ok">OK</string>
+    <string name="dialog_name_enterText">enter a name</string>
+    <string name="insideListView_Gets">Gets </string>
+    <string name="insideListView_YearsOldIn"> years old in </string>
+    <string name="insideListView_Days"> days.</string>
+    <string name="listview_row_TextView">TextView</string>
+    <string name="listview_row_todo">TODO</string>
+    <string name="deleteFragment_text">Do you really want to delete the entry?</string>
+    <string name="deleteFragment_delete">Deleted</string>
+    <string name="alarmReceiver_birthday">A friend of yours has birthday today</string>
+    <string name="alarmReceiver_Bday">Birthday</string>
 </resources>

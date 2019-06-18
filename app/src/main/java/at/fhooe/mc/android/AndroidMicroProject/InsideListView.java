@@ -46,7 +46,7 @@ public class InsideListView extends AppCompatActivity {
 
         //display the difference
         myText = findViewById(R.id.inside_listview_diff);
-        myText.setText("Gets " + years + " in " + diff + " days.");
+        myText.setText(getString(R.string.insideListView_Gets) + " " + years + " " +  (getString(R.string.insideListView_YearsOldIn )+ " " + diff  + " " + (getString(R.string.insideListView_Days))));
 
         //the delete button
         Button button = findViewById(R.id.delete);

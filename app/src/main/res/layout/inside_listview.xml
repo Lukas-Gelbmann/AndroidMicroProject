@@ -15,7 +15,8 @@
             android:id="@+id/inside_listview_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_thin"
+            android:layout_marginTop="@dimen/inside_listview_marginTop"
+            android:fontFamily="sans-serif"
             android:textAlignment="center"
             android:textSize="21sp" />
 
@@ -23,7 +24,7 @@
             android:id="@+id/inside_listview_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto"
+            android:fontFamily="sans-serif"
             android:textAlignment="center"
             android:textSize="21sp" />
 
@@ -31,6 +32,7 @@
             android:id="@+id/inside_listview_diff"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
             android:textSize="18sp" />
 
         <Button
@@ -38,14 +40,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/marginButton"
-            android:fontFamily="@font/roboto"
+            android:fontFamily="sans-serif"
             android:text="@string/delete_Button" />
 
         <Button
             android:id="@+id/returning"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto"
+            android:fontFamily="sans-serif"
             android:text="@string/return_Button" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

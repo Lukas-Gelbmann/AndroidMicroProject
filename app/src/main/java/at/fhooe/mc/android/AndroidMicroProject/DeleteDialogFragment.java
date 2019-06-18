@@ -16,12 +16,12 @@ public class DeleteDialogFragment extends DialogFragment {
         deleteName = getArguments().getString("name");
         //create dialog
         AlertDialog.Builder bob = new AlertDialog.Builder(getContext());
-        bob.setMessage("You really wanna delete???");
+        bob.setMessage(R.string.deleteFragment_text);
         //if okay: make toast, item gets deleted in main activity
         bob.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getContext(), "rip", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.deleteFragment_delete, Toast.LENGTH_SHORT).show();
                //problem
                 ((InsideListView)getActivity()).itemGetsDeleted(deleteName);
             }

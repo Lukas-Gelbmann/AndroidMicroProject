@@ -27,8 +27,8 @@ public class AlarmReceiver extends BroadcastReceiver {
                     .setDefaults(NotificationCompat.DEFAULT_ALL)
                     .setWhen(System.currentTimeMillis())
                     .setSmallIcon(R.drawable.birthdaycake)
-                    .setContentTitle("Birthday")
-                    .setContentText("A friend of yours has birthday today!")
+                    .setContentTitle(context.getString(R.string.alarmReceiver_Bday))
+                    .setContentText(context.getString(R.string.alarmReceiver_birthday))
                     .setContentIntent(pendingI);
             if (nm != null) {
                 nm.notify(0, b.build());
