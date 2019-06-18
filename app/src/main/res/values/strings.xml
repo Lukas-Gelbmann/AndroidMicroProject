@@ -8,6 +8,7 @@
     <string name="dialog_name_canel">CANCEL</string>
     <string name="dialog_name_ok">OK</string>
     <string name="dialog_name_enterText">enter a name</string>
+    <string name="listturned">reversed</string>
     <string name="insideListView_Gets">Gets </string>
     <string name="insideListView_YearsOldIn"> years old in </string>
     <string name="insideListView_Days"> days.</string>

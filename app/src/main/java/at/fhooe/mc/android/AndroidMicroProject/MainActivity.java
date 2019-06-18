@@ -357,7 +357,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         int id = item.getItemId();
         switch (id) {
             case R.id.reverse:{
-                Toast.makeText(this, "list turned", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.listturned, Toast.LENGTH_SHORT).show();
                 names = reverseList(names);
                 dates = reverseList(dates);
                 customListAdapter.notifyDataSetChanged();

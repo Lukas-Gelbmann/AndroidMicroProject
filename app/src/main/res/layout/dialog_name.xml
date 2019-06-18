@@ -9,7 +9,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="122dp"
         android:padding="10dp">
 
         <TextView
@@ -21,29 +21,31 @@
             android:textSize="18sp" />
 
         <EditText
+            android:id="@+id/input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/heading"
-            android:maxLines="1"
-            android:maxLength="25"
             android:layout_marginTop="20dp"
+            android:autofillHints=""
             android:background="@null"
-            android:textColor="#000"
             android:hint="@string/dialog_name_enterText"
-            android:id="@+id/input"
             android:inputType=""
-            android:autofillHints="" />
+            android:maxLength="25"
+            android:maxLines="1"
+            android:lines="1"
+            android:singleLine="true"
+            android:textColor="#000" />
 
         <TextView
+            android:id="@+id/action_ok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/dialog_name_ok"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
             android:layout_marginRight="20dp"
-            android:textSize="18sp"
+            android:text="@string/dialog_name_ok"
             android:textColor="#33bbff"
-            android:id="@+id/action_ok"/>
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/action_cancel"
