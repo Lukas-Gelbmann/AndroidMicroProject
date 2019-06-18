@@ -13,6 +13,6 @@
         android:id="@+id/sortDate"
         android:title="sort by date" />
     <item
-        android:id="@+id/sortAge"
-        android:title="sort by age" />
+        android:id="@+id/sortBirthyear"
+        android:title="sort by birthyear" />
 </menu>

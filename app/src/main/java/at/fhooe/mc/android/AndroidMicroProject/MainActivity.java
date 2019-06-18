@@ -16,10 +16,8 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
-import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import java.text.DateFormat;
@@ -154,6 +152,16 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         }
     }
 
+    public int getYear(String date) {
+        int i = 0;
+        while (date.charAt(i) != 46)
+            i++;
+        i++;
+        while (date.charAt(i) != 46)
+            i++;
+        return Integer.parseInt(date.substring(++i));
+    }
+
     public int getMonth(String date) {
         int i = 0;
         while (date.charAt(i) != 46)
@@ -250,7 +258,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         if (sortingpref == 1)
             sortByDate();
         if (sortingpref == 2)
-            sortByAge();
+            sortByBirthYear();
     }
 
     public void sortByName() {
@@ -306,7 +314,26 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         }
     }
 
-    public void sortByAge() {
+    public void sortByBirthYear() {
+        ArrayList<Integer> list = new ArrayList();
+        for (int i = 0; i < dates.size(); i++) {
+            list.add(i, getYear(dates.get(i)));
+        }
+        for (int j = 0; j < names.size(); j++) {
+            for (int i = 0; i < names.size() - 1; i++) {
+                if (list.get(i) > list.get(i + 1)) {
+                    int l = list.get(i);
+                    String n = names.get(i);
+                    String d = dates.get(i);
+                    list.set(i, list.get(i + 1));
+                    names.set(i, names.get(i + 1));
+                    dates.set(i, dates.get(i + 1));
+                    list.set(i + 1, l);
+                    names.set(i + 1, n);
+                    dates.set(i + 1, d);
+                }
+            }
+        }
     }
 
     public ArrayList<String> reverseList(ArrayList list) {
@@ -347,7 +374,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 customListAdapter.notifyDataSetChanged();
             }
             break;
-            case R.id.sortAge: {
+            case R.id.sortBirthyear: {
                 sortingpref = 2;
                 sort();
                 customListAdapter.notifyDataSetChanged();
