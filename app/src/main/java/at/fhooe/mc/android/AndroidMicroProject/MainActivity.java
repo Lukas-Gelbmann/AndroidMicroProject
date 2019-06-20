@@ -26,9 +26,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 
-public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, Comparable<String> {
+public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     //storing important information
+    public final static int Request_Code_Inside_Listview = 0;
+    public static final String TAG = "qwer";
     public ArrayList<String> names = new ArrayList<String>();
     public ArrayList<String> dates = new ArrayList<String>();
     public String newDate;
@@ -44,12 +46,14 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.i(TAG,"MainActivity::onCreate: app started");
 
         //get entries out of shared preferences
         entries = getSharedPreferences("entries", 0).getInt("entries", 0);
         sortingpref = getSharedPreferences("entries", 0).getInt("sortingpref", 0);
         loadData();
         loadNotifications();
+
         //create toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -66,10 +70,11 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
+                Log.i(TAG,"MainActivity::onCreate: pressed on entry");
                 Intent intent = new Intent(MainActivity.this, InsideListView.class);
                 intent.putExtra("name", names.get(position));
                 intent.putExtra("date", dates.get(position));
-                startActivityForResult(intent, 99);
+                startActivityForResult(intent, Request_Code_Inside_Listview);
             }
         });
 
@@ -79,27 +84,32 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.i(TAG,"MainActivity::onCreate: fab pressed");
                 showDatePickerDialog();
             }
         });
     }
 
-    @Override
+    @Override //startactivityforresult-->
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         switch (requestCode) {
-            case 99: {
+            case Request_Code_Inside_Listview: {
                 if (resultCode == RESULT_OK) {
+                    Log.i(TAG,"MainActivity::onActivityResult: deleted");
                     String deleteName = data.getStringExtra(ACTIVITY_SERVICE);
                     delete(deleteName);
+                    }else{
+                    Log.i(TAG,"MainActivity::onActivityResult: not deleted");
                 }
-            }
+            }break;
             default:
-                Log.e("tag", "unexpected requestcode");
+                Log.e(TAG, "MainActivity::onActivityResult: unexpected requestcode");
         }
     }
 
     //datepickerdialog
     private void showDatePickerDialog() {
+        Log.i(TAG,"MainActivity::showDatePickerDialog: datepicker started");
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, this, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
         datePickerDialog.show();
         datePickerDialog.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
@@ -118,18 +128,22 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
     //namedialog
     private void showNameDialog() {
+        Log.i(TAG,"MainActivity::showNameDialog: namedialog started");
         NameDialog nameDialog = new NameDialog();
         nameDialog.show(getSupportFragmentManager(), "NameDialog");
     }
 
     //loading data
     private void loadData() {
+        Log.i(TAG,"MainActivity::loadData: loading data");
         names = loadArray("names");
         dates = loadArray("dates");
         sort();
     }
 
+    //resets all notifications on start of program
     private void loadNotifications() {
+        Log.i(TAG,"MainActivity::loadNotifications: loading notifications");
         for (int i = 1; i <= entries; i++) {
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             Intent alarmIntent = new Intent(this, AlarmReceiver.class);
@@ -152,6 +166,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         }
     }
 
+    //returns the year of the date string
     public int getYear(String date) {
         int i = 0;
         while (date.charAt(i) != 46)
@@ -162,6 +177,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         return Integer.parseInt(date.substring(++i));
     }
 
+    //returns the month of the date string
     public int getMonth(String date) {
         int i = 0;
         while (date.charAt(i) != 46)
@@ -172,6 +188,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         return Integer.parseInt(date.substring(j, i));
     }
 
+    //returns the day of the date string
     public int getDay(String date) {
         int i = 0;
         while (date.charAt(i) != 46)
@@ -203,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         sort();
         customListAdapter.notifyDataSetChanged();
         loadNotifications();
-        Log.i("xdd", "entry added");
+        Log.i(TAG, "MainActivity::add: entry added");
     }
 
     //the process of adding new stuff to the shared preferences
@@ -217,7 +234,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         editor.commit();
     }
 
-    //deleting the name
+    //deleting
     private void delete(String deleteName) {
         int x = names.indexOf(deleteName);
         deleteInSharedPreferences(deleteName);
@@ -225,8 +242,10 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         dates.remove(x);
         deleteNotification(x);
         customListAdapter.notifyDataSetChanged();
+        Log.i(TAG, "MainActivity::delete: entry deleted");
     }
 
+    //deleting the notification for the entry
     private void deleteNotification(int x) {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent alarmIntent = new Intent(this, AlarmReceiver.class);
@@ -234,6 +253,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         alarmManager.cancel(pendingIntent);
     }
 
+    //deleting the entry in shared preferences
     public void deleteInSharedPreferences(String deleteName) {
         SharedPreferences prefs = getApplicationContext().getSharedPreferences("entries", 0);
         for (int i = 0; i < entries; i++) {
@@ -261,6 +281,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             sortByBirthYear();
     }
 
+    //sorts the entries by name
     public void sortByName() {
         for (int j = 0; j < names.size(); j++) {
             for (int i = 0; i < names.size() - 1; i++) {
@@ -276,6 +297,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         }
     }
 
+    //sorts the entries by date
     public void sortByDate() {
         ArrayList<Integer> list = new ArrayList();
         for (int i = 0; i < dates.size(); i++) {
@@ -314,6 +336,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         }
     }
 
+    //sorts the entries by birthyear
     public void sortByBirthYear() {
         ArrayList<Integer> list = new ArrayList();
         for (int i = 0; i < dates.size(); i++) {
@@ -336,52 +359,57 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         }
     }
 
+    //reverses the list
     public ArrayList<String> reverseList(ArrayList list) {
         Collections.reverse(list);
         return list;
     }
 
-    @Override
+    @Override //nothing happens
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
         //nothing happens
     }
 
-    @Override
+    @Override //inflates the options menu
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
-    @Override
+    @Override //sets the new sorting preference and sorts it
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
             case R.id.reverse:{
+                Log.i(TAG, "MainActivity::onOptionsItemSelected: entries reversed");
                 Toast.makeText(this, R.string.listturned, Toast.LENGTH_SHORT).show();
                 names = reverseList(names);
                 dates = reverseList(dates);
                 customListAdapter.notifyDataSetChanged();
             }break;
             case R.id.sortName: {
+                Log.i(TAG, "MainActivity::onOptionsItemSelected: sorted by name");
                 sortingpref = 0;
                 sort();
                 customListAdapter.notifyDataSetChanged();
             }
             break;
             case R.id.sortDate: {
+                Log.i(TAG, "MainActivity::onOptionsItemSelected: sorted by date");
                 sortingpref = 1;
                 sort();
                 customListAdapter.notifyDataSetChanged();
             }
             break;
             case R.id.sortBirthyear: {
+                Log.i(TAG, "MainActivity::onOptionsItemSelected: sorted by birthyear");
                 sortingpref = 2;
                 sort();
                 customListAdapter.notifyDataSetChanged();
             }
             break;
             default: {
-                Log.e("xdd", "unexpected menu id");
+                Log.e(TAG, "MainActivity::onOptionsItemSelected: unexpected menu id");
             }
             break;
         }
@@ -390,10 +418,5 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         editor.putInt("sortingpref", sortingpref);
         editor.commit();
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public int compareTo(String s) {
-        return this.compareTo(s);
     }
 }

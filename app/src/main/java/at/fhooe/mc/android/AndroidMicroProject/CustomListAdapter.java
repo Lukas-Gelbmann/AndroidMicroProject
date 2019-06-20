@@ -15,16 +15,16 @@ public class CustomListAdapter extends ArrayAdapter {
     private final Activity context;
 
     //to store the list of names
-    private final ArrayList<String> nameArray;
+    private final ArrayList<String> names;
 
     //to store the list of dates
-    private final ArrayList<String> infoArray;
+    private final ArrayList<String> dates;
 
     public CustomListAdapter(Activity context, ArrayList<String> nameArrayParam, ArrayList<String> infoArrayParam) {
         super(context, R.layout.listview_row, nameArrayParam);
         this.context = context;
-        this.nameArray = nameArrayParam;
-        this.infoArray = infoArrayParam;
+        this.names = nameArrayParam;
+        this.dates = infoArrayParam;
     }
 
     public View getView(int position, View view, ViewGroup parent) {
@@ -36,8 +36,8 @@ public class CustomListAdapter extends ArrayAdapter {
         TextView infoTextField = (TextView) rowView.findViewById(R.id.infoTextViewID);
 
         //this code sets the values of the objects to values from the arrays
-        nameTextField.setText(nameArray.get(position));
-        infoTextField.setText(infoArray.get(position));
+        nameTextField.setText(names.get(position));
+        infoTextField.setText(dates.get(position));
         return rowView;
     }
 }

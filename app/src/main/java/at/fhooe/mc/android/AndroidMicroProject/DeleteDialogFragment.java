@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.widget.Toast;
 
 public class DeleteDialogFragment extends DialogFragment {
@@ -14,22 +15,26 @@ public class DeleteDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         //get the name
         deleteName = getArguments().getString("name");
+
         //create dialog
         AlertDialog.Builder bob = new AlertDialog.Builder(getContext());
         bob.setMessage(R.string.deleteFragment_text);
+
         //if okay: make toast, item gets deleted in main activity
         bob.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(getContext(), R.string.deleteFragment_delete, Toast.LENGTH_SHORT).show();
-               //problem
+                Log.i(MainActivity.TAG, "DeleteDialogFragment::onCreateDialog: positive button pressed");
                 ((InsideListView)getActivity()).itemGetsDeleted(deleteName);
             }
         });
+
         //if cancel: nothing happens
         bob.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                Log.i(MainActivity.TAG, "DeleteDialogFragment::onCreateDialog: negative button pressed");
             }
         });
         Dialog d = bob.create();

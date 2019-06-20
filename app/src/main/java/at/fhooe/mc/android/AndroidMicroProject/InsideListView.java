@@ -3,6 +3,7 @@ package at.fhooe.mc.android.AndroidMicroProject;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 
 public class InsideListView extends AppCompatActivity {
 
-    @Override
+    @Override //when insidelistview gets started
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.inside_listview);
@@ -53,6 +54,7 @@ public class InsideListView extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.i(MainActivity.TAG, "InsideListView::onCreate: delete button pressed");
                 DeleteDialogFragment deleteDialogFragment = newInstance(getIntent().getStringExtra("name"));
                 deleteDialogFragment.show(getSupportFragmentManager(), "delete");
             }
@@ -63,20 +65,23 @@ public class InsideListView extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.i(MainActivity.TAG, "InsideListView::onCreate: return button pressed");
                 returnWithoutDelete();
             }
         });
     }
 
+    //creates instance of deletedialogfragment
     public static DeleteDialogFragment newInstance(String name) {
         DeleteDialogFragment f = new DeleteDialogFragment();
-        // Supply name input as an argument.
+        //Supply name input as an argument.
         Bundle args = new Bundle();
         args.putString("name", name);
         f.setArguments(args);
         return f;
     }
 
+    //if user presses delete in the deletedialogfragment
     public void itemGetsDeleted(String deleteName) {
         Intent i = new Intent();
         i.putExtra(MainActivity.ACTIVITY_SERVICE, deleteName);
@@ -84,12 +89,14 @@ public class InsideListView extends AppCompatActivity {
         finish();
     }
 
+    //if user presses return
     public void returnWithoutDelete() {
         Intent i = new Intent();
         setResult(RESULT_CANCELED, i);
         finish();
     }
 
+    //calculating the time between the birthday and the actual date
     long getDifference(String _date) throws ParseException {
         SimpleDateFormat myFormat = new SimpleDateFormat("MMdd");
         int date = (getMonth(_date)) * 100 + getDay(_date);
@@ -106,6 +113,7 @@ public class InsideListView extends AppCompatActivity {
         return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
     }
 
+    //returns the year of the date string
     public int getYear(String date) {
         int i = 0;
         while (date.charAt(i) != 46)
@@ -116,6 +124,7 @@ public class InsideListView extends AppCompatActivity {
         return Integer.parseInt(date.substring(++i));
     }
 
+    //returns the month of the date string
     public int getMonth(String date) {
         int i = 0;
         while (date.charAt(i) != 46)
@@ -127,6 +136,7 @@ public class InsideListView extends AppCompatActivity {
 
     }
 
+    //returns the day of the date string
     public int getDay(String date) {
         int i = 0;
         while (date.charAt(i) != 46)

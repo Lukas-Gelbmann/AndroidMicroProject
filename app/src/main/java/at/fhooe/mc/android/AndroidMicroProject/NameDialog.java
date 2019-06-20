@@ -18,6 +18,7 @@ public class NameDialog extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_name, container, false);
+
         // the buttons / input of the dialog
         cancel = view.findViewById(R.id.action_cancel);
         ok = view.findViewById(R.id.action_ok);
@@ -30,6 +31,7 @@ public class NameDialog extends DialogFragment {
                 getDialog().dismiss();
             }
         });
+
         //if you click on ok --> call method newinput() in main activity if input != null
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
